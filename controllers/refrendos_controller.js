@@ -4,24 +4,6 @@ const { validationResult } = require('express-validator');
 const { return_error } = require('../helpers/helper');
 const pool = require('../config/mariadb.js');
 
-function buscarUnidad(id) {
-    return new Promise((resolve, reject) => {
-        // Hacemos una consulta GET al endpoint para obtener la información completa de la tabla "unidad"
-        axios.get('http://developer.tecmm.mx:3302/v1/unidad')
-            .then(responsee => {
-                // Buscamos el id en los datos recibidos
-                const unidad = responsee.data.find(unidad => unidad.idUnidad === id);
-                // Si el id existe, resolvemos la promesa con la información de la unidad correspondiente
-                if (unidad) {
-                    resolve(unidad.idUnidad);
-                } else {
-                    resolve(null);
-                }
-            })
-            .catch(error => reject(error));
-    });
-}
-
 const post_refrendos = async (req, res) => {
     const {idVehiculo, monto, fechaInicio, fechaVencimiento} = req.body;
 
