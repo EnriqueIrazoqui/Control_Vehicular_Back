@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const { body } = require("express-validator");
+const { body, param } = require("express-validator");
 
 const { post_automovil, get_automovil, put_automovil, delete_automovil } = require('../controllers/automovil_controller.js');
 
@@ -30,8 +30,8 @@ router.put('/',
     body('tipoCombustible').exists().notEmpty().isString(),
     put_automovil);
 
-router.delete('/',
-    body('idVehiculo').exists().notEmpty().isNumeric().not().isString(),
+router.delete('/:idVehiculo',
+    param('idVehiculo').exists().notEmpty().isNumeric(),
     delete_automovil);
 
 module.exports = router

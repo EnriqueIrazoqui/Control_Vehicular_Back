@@ -20,3 +20,4 @@ app.use((req, res, next) => {
 });
 
 app.use('/automovil', require('./routes/automovil_routes'));
+app.use('/refrendos', require('./routes/refrendos_routes'));
