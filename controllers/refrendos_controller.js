@@ -123,7 +123,7 @@ const delete_refrendos = async (req, res) => {
         try{
             const validacion_clave = await conn.query('SELECT count(idRefrendo) as result FROM Refrendos WHERE idRefrendo = ?', idRefrendo);
             if(parseInt(validacion_clave[0].result) === 0){
-                const error = return_error(406, "El vehiculo no existe");
+                const error = return_error(406, "El refrendo no existe");
                 return res.status(406).json(error);
             }
             const query = await conn.query("DELETE FROM Refrendos WHERE idRefrendo = ?", idRefrendo);
