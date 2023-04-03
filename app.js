@@ -21,3 +21,5 @@ app.use((req, res, next) => {
 
 app.use('/automovil', require('./routes/automovil_routes'));
 app.use('/refrendos', require('./routes/refrendos_routes'));
+app.use('/seguros', require('./routes/seguros_routes'));
+app.use('/servicios', require('./routes/servicios_routes'));
