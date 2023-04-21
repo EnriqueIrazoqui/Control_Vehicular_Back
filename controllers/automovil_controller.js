@@ -134,7 +134,7 @@ const put_automovil = async (req, res) => {
 }
 
 const delete_automovil = async (req, res) => {
-    const {idVehiculo} = req.body;
+    const {idVehiculo} = req.params;
 
     const validation_errors = validationResult(req);
     if (!validation_errors.isEmpty()) {
