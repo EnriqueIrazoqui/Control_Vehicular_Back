@@ -23,7 +23,7 @@ function buscarUnidad(id) {
 }
 
 const post_automovil = async (req, res) => {
-    const {idCampus, marca, modelo, placas, color, generacion, serie, tipoCombustible} = req.body;
+    const {idCampus, marca, modelo, placas, color, serie, tipoCombustible} = req.body;
 
     const validation_errors = validationResult(req);
     if (!validation_errors.isEmpty()) {
@@ -32,14 +32,14 @@ const post_automovil = async (req, res) => {
     }
 
     await pool.getConnection().then( async (conn) => {
-        const data = [idCampus, marca, modelo, placas, color, generacion, serie, tipoCombustible]
+        const data = [idCampus, marca, modelo, placas, color, serie, tipoCombustible]
         try{
             const valor = await buscarUnidad(idCampus);
             if (valor === null) {
                 const error = return_error(406, "La unidad no existe");
                 return res.status(406).json(error);
             }
-            const query = await conn.query("INSERT INTO Vehiculo(idCampus, marca, modelo, placas, color, generacion, serie, tipoCombustible) VALUES(?,?,?,?,?,?,?,?)", data);
+            const query = await conn.query("INSERT INTO Vehiculo(idCampus, marca, modelo, placas, color, serie, tipoCombustible) VALUES(?,?,?,?,?,?,?)", data);
             console.log(query);
 
             const id = await conn.query('SELECT MAX(idVehiculo) as ID FROM Vehiculo');
@@ -87,7 +87,7 @@ const get_automovil = async (req, res) => {
 }
 
 const put_automovil = async (req, res) => {
-    const {idVehiculo, idCampus, marca, modelo, placas, color, generacion, serie, tipoCombustible} = req.body;
+    const {idVehiculo, idCampus, marca, modelo, placas, color, serie, tipoCombustible} = req.body;
 
     const validation_errors = validationResult(req);
     if (!validation_errors.isEmpty()) {
@@ -96,7 +96,7 @@ const put_automovil = async (req, res) => {
     }
 
     await pool.getConnection().then( async (conn) => {
-        const data = [idCampus, marca, modelo, placas, color, generacion, serie, tipoCombustible, idVehiculo]
+        const data = [idCampus, marca, modelo, placas, color, serie, tipoCombustible, idVehiculo]
         try{
             const valor = await buscarUnidad(idCampus);
             if (valor === null) {
@@ -109,7 +109,7 @@ const put_automovil = async (req, res) => {
                 const error = return_error(406, "El vehiculo no existe");
                 return res.status(406).json(error);
             }
-            const query = await conn.query("UPDATE Vehiculo SET idCampus = ?, marca = ?, modelo = ?, placas = ?, color = ?, generacion = ?, serie = ?, tipoCombustible = ? WHERE idVehiculo = ?", data);
+            const query = await conn.query("UPDATE Vehiculo SET idCampus = ?, marca = ?, modelo = ?, placas = ?, color = ?, serie = ?, tipoCombustible = ? WHERE idVehiculo = ?", data);
             console.log(query);
             
             res.status(200).json({
