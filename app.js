@@ -24,4 +24,5 @@ app.use('/refrendos', require('./routes/refrendos_routes'));
 app.use('/seguros', require('./routes/seguros_routes'));
 app.use('/servicios', require('./routes/servicios_routes'));
 app.use('/verificaciones', require('./routes/verificaciones_routes'));
-app.use('/prestamoVehicularSalida', require('./routes/prestamoVehicularSalida'));
+app.use('/prestamoVehicularSalida', require('./routes/prestamoVehicularSalida_routes'));
+app.use('/prestamoVehicularRegreso', require('./routes/prestamoVehicularRegreso_routes'));
