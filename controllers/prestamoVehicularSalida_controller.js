@@ -98,7 +98,7 @@ const post_PrestamoVehicularSalida = async (req, res) => {
 const get_PrestamoVehicularSalida = async (req, res) => {
     await pool.getConnection().then(async (conn) => {
         try {
-            const query = await conn.query("SELECT * FROM PrestamoVehiculoSalida");
+            const query = await conn.query("SELECT p.id, v.marca, v.modelo, v.placas, p.idSupervisor, p.idUsuario, p.kilometraje, p.descripcionDanos, p.tapetes, p.llantasDeRefaccion, p.gatoHidraulico, p.extras, p.nivelDeCombustible, p.fechaHora, p.foto FROM PrestamoVehiculoSalida AS p INNER JOIN Vehiculo v ON p.idVehiculo = v.idVehiculo");
 
             res.json(query);
             conn.end();
