@@ -3,7 +3,7 @@ const router = express.Router();
 
 const { body, param } = require("express-validator");
 
-const { post_automovil, get_automovil, put_automovil, delete_automovil } = require('../controllers/automovil_controller.js');
+const { post_automovil, get_automovil, get_automovilByPlacas, put_automovil, delete_automovil } = require('../controllers/automovil_controller.js');
 
 router.post('/',
     body('idCampus').exists().notEmpty().isString(),
@@ -16,6 +16,10 @@ router.post('/',
     post_automovil);
 
 router.get('/', get_automovil);
+
+router.get('/:placas',
+    param('placas').exists().notEmpty().isString(),
+    get_automovilByPlacas);
 
 router.put('/',
     body('idVehiculo').exists().notEmpty().isNumeric().not().isString(),

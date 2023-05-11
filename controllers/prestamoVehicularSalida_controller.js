@@ -7,7 +7,7 @@ const pool = require('../config/mariadb.js');
 function buscarAdmin(id) {
     return new Promise((resolve, reject) => {
         // Hacemos una consulta GET al endpoint para obtener la información completa de la tabla "admin"
-        axios.get('http://developer.tecmm.mx:3302/v1/usuario/admin')
+        axios.get('http://developer.tecmm.mx:3322/v1/usuario/admin')
             .then(responsee => {
                 // Buscamos el id en los datos recibidos
                 const admin = responsee.data.find(admin => admin.noNomina === id);
@@ -25,7 +25,7 @@ function buscarAdmin(id) {
 function buscarUsuario(id) {
     return new Promise((resolve, reject) => {
         // Hacemos una consulta GET al endpoint para obtener la información completa de la tabla "usuario"
-        axios.get('http://developer.tecmm.mx:3302/v1/usuario/usuario')
+        axios.get('http://developer.tecmm.mx:3322/v1/usuario/usuario')
             .then(responsee => {
                 // Buscamos el id en los datos recibidos
                 const usuario = responsee.data.find(usuario => usuario.noNomina === id);

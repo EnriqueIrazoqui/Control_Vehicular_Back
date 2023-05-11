@@ -7,7 +7,7 @@ const pool = require('../config/mariadb.js');
 function buscarUnidad(id) {
     return new Promise((resolve, reject) => {
         // Hacemos una consulta GET al endpoint para obtener la información completa de la tabla "unidad"
-        axios.get('http://developer.tecmm.mx:3302/v1/unidad')
+        axios.get('http://developer.tecmm.mx:3322/v1/unidad')
             .then(responsee => {
                 // Buscamos el id en los datos recibidos
                 const unidad = responsee.data.find(unidad => unidad.idUnidad === id);
@@ -19,6 +19,7 @@ function buscarUnidad(id) {
                 }
             })
             .catch(error => reject(error));
+            
     });
 }
 
@@ -74,6 +75,40 @@ const get_automovil = async (req, res) => {
             res.json(query);
             conn.end();
         } catch (error) {
+            res.status(500).json({
+                "ok": false,
+                "message": {
+                    "statusCode": 500,
+                    "messageText": "internal server error"
+                }
+            })
+            conn.end();
+        }
+    });
+}
+
+const get_automovilByPlacas = async (req, res) => {
+    const {placas} = req.params;
+
+    const validation_errors = validationResult(req);
+    if (!validation_errors.isEmpty()) {
+        const response = return_error(401, 'datos con formato incorrecto');
+        return res.status(401).json(response);
+    }
+
+    await pool.getConnection().then( async (conn) => {
+        try{
+            const validacion_clave = await conn.query('SELECT count(placas) as result FROM Vehiculo WHERE placas = ?', placas);
+            if(parseInt(validacion_clave[0].result) === 0){
+                const error = return_error(406, "El vehiculo no existe");
+                return res.status(406).json(error);
+            }
+            const query = await conn.query("SELECT * FROM Vehiculo WHERE placas = ?", placas);
+            console.log(query);
+
+            res.json(query);
+            conn.end();
+        }catch(error){
             res.status(500).json({
                 "ok": false,
                 "message": {
@@ -176,6 +211,7 @@ const delete_automovil = async (req, res) => {
 module.exports = {
     post_automovil,
     get_automovil,
+    get_automovilByPlacas,
     put_automovil,
     delete_automovil
 }
